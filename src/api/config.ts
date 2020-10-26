@@ -1,5 +1,5 @@
 export const address: string = "Zh1ufyG4C2LALbQowNKrk5Yj8m21sUFmkC5F8o8zUKPYMNnCD6nLk7pd5FoPuwy8KcmJboSUcNYwUGX6EB3Ht3u";
-export const address1: string = "LHQhhHboKziVF7yQpayBqpKVU9cBY7nu7VSaBTfDuSfFLETvDpgrA5coAy5sro3Lvv4PmcaimkvvejSF64Dn6xd";
+export const address1: string = "CZAjwxwJhbkxsJHoqTcKZNti4XyCtec182Ys2EHx4SuHEYHY76hk5hLNi1EhuQJkoAdRrDxEg6EVMpVEkzemVWv";
 export const abi: any = [
 	{
 		"inputs": [

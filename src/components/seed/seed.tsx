@@ -134,16 +134,16 @@ class Seed extends React.Component<any, Seeds> {
       let startmainpkr = strmainpk.substring(0, 5);
       let endmainpkr = strmainpk.substring(length - 5, length)
       let strmainpkr = startmainpkr + "..." + endmainpkr;
-      // contract.IToken(userobj.MainPKr).then((res)=>{
-      //   that.setState({
-      //     tokennum:fromValue(res[0],18).toNumber()
-      //   })
-      // })
-      // contract.balanceOf().then((res)=>{
-      //   that.setState({
-      //     tokenseronum:fromValue(res.tkn.SERO,18).toNumber()
-      //   })
-      // })
+      contract.IToken(userobj.MainPKr).then((res)=>{
+        that.setState({
+          tokennum:fromValue(res[0],18).toNumber()
+        })
+      })
+      contract.balanceOf().then((res)=>{
+        that.setState({
+          tokenseronum:fromValue(res.tkn.SERO,18).toNumber()
+        })
+      })
       that.ListShow(userobj.MainPKr);
       that.myExchangeValue(userobj.MainPKr);
       that.setState({
@@ -778,7 +778,10 @@ class Seed extends React.Component<any, Seeds> {
               <img src={require('../../images/head.png')} alt="" />
             </div>
             <div className="seed-header-title">
-              <p>{i18n.t("SeroEcologicalLaboratorygovernancetoken")}</p>
+              <p>
+                {/* {i18n.t("SeroEcologicalLaboratorygovernancetoken")} */}
+                SERO实验室2号项⽬
+              </p>
             </div>
           </div>
           <div className="seed-content">
