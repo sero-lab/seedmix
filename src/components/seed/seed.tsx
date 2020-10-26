@@ -383,9 +383,7 @@ class Seed extends React.Component<any, Seeds> {
         });
       that.loading("loading", true, "", "")
       }
-      console.log("发送成功", res)
       service.getTransactionReceipt(res).then((data) => {
-        console.log("返回成功", data);
         if (data != null) {
           that.loading("loading", false, "请求成功", successIcon)
           that.getdata();
@@ -404,7 +402,6 @@ class Seed extends React.Component<any, Seeds> {
 
 
   onChangeRecycleNum(e: any) {
-    console.log(e)
     let that = this;
     if (e != null) {
       that.setState({
@@ -427,8 +424,6 @@ class Seed extends React.Component<any, Seeds> {
 
   sendRecycleModal = () => {
     let that = this;
-    console.log(that.state.recycleIndex)
-    console.log(that.state.recycleNum)
     let cy = "SEEDMIX";
     contract.recycle(that.state.account, cy, that.state.recycleIndex, "0x" + new BigNumber(that.state.recycleNum).multipliedBy(10 ** 18).toString(16)).then((res) => {
       if (res != null) {
@@ -438,9 +433,7 @@ class Seed extends React.Component<any, Seeds> {
         });
       that.loading("loading", true, "", "")
       }
-      console.log("发送成功", res)
       service.getTransactionReceipt(res).then((data) => {
-        console.log("返回成功", data);
         if (data != null) {
           that.loading("loading", false, "请求成功", successIcon)
           that.getdata();
@@ -465,7 +458,6 @@ class Seed extends React.Component<any, Seeds> {
     let cy = "SERO";
     if (e.target.dataset.name === "statein") {
       contract.Withdrawal(that.state.account, cy, e.target.dataset.index).then((res) => {
-        console.log("发送成功", res)
         if (res != null) {
           that.setState({
             visibleDetail: false,
@@ -473,7 +465,6 @@ class Seed extends React.Component<any, Seeds> {
         that.loading("loading", true, "", "")
         }
         service.getTransactionReceipt(res).then((data) => {
-          console.log("返回成功", data);
           if (data != null) {
             that.loading("loading", false, "请求成功", successIcon)
             that.getdata();
@@ -495,9 +486,7 @@ class Seed extends React.Component<any, Seeds> {
         });
       that.loading("loading", true, "", "")
       }
-      console.log("发送成功", res)
       service.getTransactionReceipt(res).then((data) => {
-        console.log("返回成功", data);
         if (data != null) {
           that.loading("loading", false, "请求成功", successIcon)
           that.getdata();
