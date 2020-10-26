@@ -404,8 +404,9 @@ class Seed extends React.Component<any, Seeds> {
   onChangeRecycleNum(e: any) {
     let that = this;
     if (e != null) {
+      var a=Math.floor(e);
       that.setState({
-        recycleNum: e
+        recycleNum: a
       })
     } else {
       that.setState({
@@ -572,11 +573,12 @@ class Seed extends React.Component<any, Seeds> {
     return information;
   }
   onChangeSeedMixNum(e: any) {
-    console.log(e)
+
     let that = this;
     if (e != null) {
+      var a=Math.floor(e)
       that.setState({
-        pledgeNum: e * 100
+        pledgeNum: a * 100
       })
     } else {
       that.setState({
@@ -766,6 +768,7 @@ class Seed extends React.Component<any, Seeds> {
                 <div>
                   <Card>
                     <Statistic
+                      
                       title={`${i18n.t("Totalpledge")}SERO`}
                       value={this.state.tokenseronum} />
                   </Card>
@@ -836,7 +839,8 @@ class Seed extends React.Component<any, Seeds> {
             <div className="content-btn">
               <div>
                 <Statistic
-                  title={i18n.t("Totalpledge")}
+                  // title={i18n.t("Totalpledge")}
+                  title="剩余质押总数"
                   value={`${this.state.backedValue} SERO`} valueStyle={{ color: '#FFFFFF' }} />
                 <Modal
                   title={i18n.t("Inputthenumberofseedcultured")}
@@ -857,7 +861,7 @@ class Seed extends React.Component<any, Seeds> {
                         </p>
                       </div>
                       <div>
-                        <InputNumber type="number" min={1} defaultValue={1} value={new BigNumber(this.state.pledgeNum).dividedBy(10 ** 2).toNumber()} onChange={(e) => this.onChangeSeedMixNum(e)} className="inputWidth" />
+                        <InputNumber type="number"   min={1} defaultValue={1} value={new BigNumber(this.state.pledgeNum).dividedBy(10 ** 2).toNumber()} onChange={(e) => this.onChangeSeedMixNum(e)} className="inputWidth" />
                       </div>
                     </li>
                     <li>
@@ -999,7 +1003,7 @@ class Seed extends React.Component<any, Seeds> {
                 {detailModal.lookDetail ? <li className="detailbtn" data-index={detailModal.index} onClick={(e) => this.WithdrawalDetail(e)}>
                   {i18n.t("withdrawal")}
                 </li> : <Countdown value={detailModal.countDown} valueStyle={{ color: "#FFFFFF", background: "gray", textAlign: "center" }} format="HH:mm:ss" onFinish={() => this.cli()} />}
-              </ul> : <ul> <li className="message-success ">
+              </ul> : <ul> <li className="message-success">
                 {i18n.t("Completed")}
               </li></ul>}
               </Descriptions.Item>
