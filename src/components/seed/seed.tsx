@@ -134,15 +134,28 @@ class Seed extends React.Component<any, Seeds> {
       let startmainpkr = strmainpk.substring(0, 5);
       let endmainpkr = strmainpk.substring(length - 5, length)
       let strmainpkr = startmainpkr + "..." + endmainpkr;
-      contract.IToken(userobj.MainPKr).then((res)=>{
-        that.setState({
-          tokennum:fromValue(res[0],18).toNumber()
-        })
+      contract.IToken(userobj.MainPKr).then((res) => {
+        if (res[0] == null) {
+          that.setState({
+            tokennum: 0
+          })
+        } else {
+          that.setState({
+            tokennum: fromValue(res[0], 18).toNumber()
+          })
+        }
       })
-      contract.balanceOf().then((res)=>{
-        that.setState({
-          tokenseronum:fromValue(res.tkn.SERO,18).toNumber()
-        })
+      contract.balanceOf().then((res) => {
+        if (res.tkn.SERO == null) {
+          that.setState({
+            tokenseronum: 0
+          })
+        } else {
+          that.setState({
+            tokenseronum: fromValue(res.tkn.SERO, 18).toNumber()
+          })
+        }
+
       })
       that.ListShow(userobj.MainPKr);
       that.myExchangeValue(userobj.MainPKr);
@@ -378,7 +391,7 @@ class Seed extends React.Component<any, Seeds> {
     contract.sendCy(that.state.account, cy, "0x" + new BigNumber(that.state.pledgeNum).multipliedBy(10 ** 18).toString(16)).then((res) => {
 
       if (res != null) {
-      that.loading("loading", true, "", "")
+        that.loading("loading", true, "", "")
       }
       service.getTransactionReceipt(res).then((data) => {
         if (data != null) {
@@ -401,7 +414,7 @@ class Seed extends React.Component<any, Seeds> {
   onChangeRecycleNum(e: any) {
     let that = this;
     if (e != null) {
-      var a=Math.floor(e);
+      var a = Math.floor(e);
       that.setState({
         recycleNum: a
       })
@@ -427,9 +440,11 @@ class Seed extends React.Component<any, Seeds> {
       visibleDetail: false,
       visiblerecycle: false,
     });
+
+
     contract.recycle(that.state.account, cy, that.state.recycleIndex, "0x" + new BigNumber(that.state.recycleNum).multipliedBy(10 ** 18).toString(16)).then((res) => {
       if (res != null) {
-      that.loading("loading", true, "", "")
+        that.loading("loading", true, "", "")
       }
       service.getTransactionReceipt(res).then((data) => {
         if (data != null) {
@@ -440,8 +455,9 @@ class Seed extends React.Component<any, Seeds> {
       }).catch(e => {
         that.loading("loading", false, "请求失败", errIcon)
       });
-    }).catch(e=>{
-      message.error(typeof e == "object"?e.messge:e)
+    }).catch(e => {
+      message.error(typeof e == "object" ? e.messge : e)
+      console.log(typeof e == "object" ? e.messge : e)
     })
   };
 
@@ -461,7 +477,7 @@ class Seed extends React.Component<any, Seeds> {
           that.setState({
             visibleDetail: false,
           });
-        that.loading("loading", true, "", "")
+          that.loading("loading", true, "", "")
         }
         service.getTransactionReceipt(res).then((data) => {
           if (data != null) {
@@ -483,7 +499,7 @@ class Seed extends React.Component<any, Seeds> {
         that.setState({
           visibleDetail: false,
         });
-      that.loading("loading", true, "", "")
+        that.loading("loading", true, "", "")
       }
       service.getTransactionReceipt(res).then((data) => {
         if (data != null) {
@@ -574,7 +590,7 @@ class Seed extends React.Component<any, Seeds> {
 
     let that = this;
     if (e != null) {
-      var a=Math.floor(e)
+      var a = Math.floor(e)
       that.setState({
         pledgeNum: a * 100
       })
@@ -766,7 +782,7 @@ class Seed extends React.Component<any, Seeds> {
                 <div>
                   <Card>
                     <Statistic
-                      
+
                       title={`${i18n.t("Totalpledge")}SERO`}
                       value={this.state.tokenseronum} />
                   </Card>
@@ -859,7 +875,7 @@ class Seed extends React.Component<any, Seeds> {
                         </p>
                       </div>
                       <div>
-                        <InputNumber type="number"   min={1} defaultValue={1} value={new BigNumber(this.state.pledgeNum).dividedBy(10 ** 2).toNumber()} onChange={(e) => this.onChangeSeedMixNum(e)} className="inputWidth" />
+                        <InputNumber type="number" min={1} defaultValue={1} value={new BigNumber(this.state.pledgeNum).dividedBy(10 ** 2).toNumber()} onChange={(e) => this.onChangeSeedMixNum(e)} className="inputWidth" />
                       </div>
                     </li>
                     <li>
