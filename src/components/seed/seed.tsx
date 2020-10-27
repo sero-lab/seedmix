@@ -118,7 +118,6 @@ class Seed extends React.Component<any, Seeds> {
   getdata = () => {
     let that = this;
     service.accountList().then((res: any) => {
-      console.log(res);
       let userobj: any = {}
       if (sessionStorage.getItem("userName")?.length === undefined) {
         userobj = res.find(function (item: any) {
@@ -171,14 +170,21 @@ class Seed extends React.Component<any, Seeds> {
     }).catch(e => {
     })
 
-    that.loading("loadingbox", false, "", null)
+    that.loading("loadingbox", false, "", null);
+    that.setState({
+      pledgeNum: 100,
+      recycleNum: 1
+    })
   }
   radiobtn = (e: any) => {
     let that = this;
     that.setState({
       radioStatu: e
     });
-    that.getdata();
+    that.loading("loading", true, "", "")
+    setTimeout(function () {
+      that.getdata();
+    }, 15000);
   }
 
 
@@ -188,6 +194,7 @@ class Seed extends React.Component<any, Seeds> {
       contract.getList(str).then((res) => {
         console.log(res)
         let listdata: Array<item> = [];
+
         for (let i = 0; i < res.result.length; i++) {
           let objShow = {
             index: "",
@@ -240,6 +247,7 @@ class Seed extends React.Component<any, Seeds> {
           objShow.countDown = countDown;
           listdata.push(objShow)
         }
+
         that.setState({
           Listdata: listdata
         })
@@ -248,7 +256,6 @@ class Seed extends React.Component<any, Seeds> {
       })
     } else {
       contract.getListScreen(str).then((res) => {
-        console.log(res)
         let listdata: Array<item> = [];
         for (let i = 0; i < res.result.length; i++) {
           let objShow = {
@@ -347,9 +354,15 @@ class Seed extends React.Component<any, Seeds> {
     });
   };
   hideModal = () => {
-    this.setState({
+    let that=this;
+    that.setState({
       visibleName: false,
     });
+
+    that.loading("loading", true, "", "")
+      setTimeout(function () {
+        that.getdata();
+      }, 3000);
   };
   selectName(e: any) {
     let that = this;
@@ -376,15 +389,18 @@ class Seed extends React.Component<any, Seeds> {
     });
   };
   hidePledgeModal = () => {
-    this.setState({
+    let that=this;
+    that.setState({
       visiblePledge: false,
-      pledgeNum: 100,
     });
+    that.loading("loading", true, "", "")
+      setTimeout(function () {
+        that.getdata();
+      }, 3000);
   };
   sendPledgeModal = () => {
     let that = this;
     that.setState({
-      pledgeNum: 100,
       visiblePledge: false,
     });
     let cy = "SERO";
@@ -396,17 +412,21 @@ class Seed extends React.Component<any, Seeds> {
       service.getTransactionReceipt(res).then((data) => {
         if (data != null) {
           that.loading("loading", false, "请求成功", successIcon)
-          that.getdata();
+          setTimeout(function () {
+            that.getdata();
+          }, 3000);
         }
-
       }).catch(e => {
         that.loading("loading", false, "请求失败", errIcon)
       });
     }).catch((e) => {
       this.setState({
         visiblePledge: false,
-        pledgeNum: 100,
       });
+      that.loading("loading", true, "", "")
+      setTimeout(function () {
+        that.getdata();
+      }, 3000);
     });
   };
 
@@ -441,7 +461,6 @@ class Seed extends React.Component<any, Seeds> {
       visiblerecycle: false,
     });
 
-
     contract.recycle(that.state.account, cy, that.state.recycleIndex, "0x" + new BigNumber(that.state.recycleNum).multipliedBy(10 ** 18).toString(16)).then((res) => {
       if (res != null) {
         that.loading("loading", true, "", "")
@@ -449,7 +468,9 @@ class Seed extends React.Component<any, Seeds> {
       service.getTransactionReceipt(res).then((data) => {
         if (data != null) {
           that.loading("loading", false, "请求成功", successIcon)
-          that.getdata();
+          setTimeout(function () {
+            that.getdata();
+          }, 3000);
         }
 
       }).catch(e => {
@@ -467,7 +488,6 @@ class Seed extends React.Component<any, Seeds> {
     });
   };
 
-
   Withdrawal(e: any) {
     let that = this;
     let cy = "SERO";
@@ -482,7 +502,9 @@ class Seed extends React.Component<any, Seeds> {
         service.getTransactionReceipt(res).then((data) => {
           if (data != null) {
             that.loading("loading", false, "请求成功", successIcon)
-            that.getdata();
+            setTimeout(function () {
+              that.getdata();
+            }, 3000);
           }
 
         }).catch(e => {
@@ -504,7 +526,9 @@ class Seed extends React.Component<any, Seeds> {
       service.getTransactionReceipt(res).then((data) => {
         if (data != null) {
           that.loading("loading", false, "请求成功", successIcon)
-          that.getdata();
+          setTimeout(function () {
+            that.getdata();
+          }, 3000);
         }
 
       }).catch(e => {
@@ -605,7 +629,10 @@ class Seed extends React.Component<any, Seeds> {
     that.setState({
       visibleDetail: false
     })
-    that.getdata();
+    that.loading("loading", true, "", "")
+    setTimeout(function () {
+      that.getdata();
+    }, 15000);
   }
   openRules() {
     let that = this;
@@ -638,6 +665,10 @@ class Seed extends React.Component<any, Seeds> {
     that.setState({
       visiblelook: false
     })
+    that.loading("loading", true, "", "")
+      setTimeout(function () {
+        that.getdata();
+      }, 3000);
   };
   viewDetail(e: any) {
     let that = this;
@@ -654,6 +685,10 @@ class Seed extends React.Component<any, Seeds> {
     that.setState({
       visibleDetail: false,
     })
+    that.loading("loading", true, "", "")
+      setTimeout(function () {
+        that.getdata();
+      }, 3000);
   }
 
   loading = (loadingbox: string, status: boolean, description: string, message: any) => {

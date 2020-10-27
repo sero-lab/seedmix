@@ -99,7 +99,6 @@ class Contract {
             }).catch(err => {
                 reject(err)
             })
-
         })
     }
 
@@ -118,7 +117,6 @@ class Contract {
 
     async execute(method: string, args: Array<any>, account: any, cy?: string, value?: string): Promise<any> {
         const packData: any = this.contract.packData(method, args, true)
-
         return new Promise((resolve, reject) => {
             const params: Params = {
                 to: this.contract.address
