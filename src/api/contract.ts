@@ -40,9 +40,6 @@ class Contract {
         return res;
     }
 
-
-    
-
     async recycle(account: any, cy: string,  index:any,value?: string) {
         const res = await this.execute("recycle", [index], account, cy, value);
         return res;

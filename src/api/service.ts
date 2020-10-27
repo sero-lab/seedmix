@@ -69,7 +69,7 @@ class Service {
             name: "SEEDMIX ",
             contractAddress: config.address,
             github: "https://github.com/conspay/coinhi",
-            author: "seed",
+            author: "seedmix",
             url: window.location.origin + window.location.pathname,
             logo: window.location.origin + window.location.pathname + "logo.png",
             barColor: "#00424a",

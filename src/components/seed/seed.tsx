@@ -184,7 +184,7 @@ class Seed extends React.Component<any, Seeds> {
     that.loading("loading", true, "", "")
     setTimeout(function () {
       that.getdata();
-    }, 15000);
+    }, 7000);
   }
 
 
@@ -362,7 +362,7 @@ class Seed extends React.Component<any, Seeds> {
     that.loading("loading", true, "", "")
       setTimeout(function () {
         that.getdata();
-      }, 3000);
+      }, 1500);
   };
   selectName(e: any) {
     let that = this;
@@ -396,7 +396,7 @@ class Seed extends React.Component<any, Seeds> {
     that.loading("loading", true, "", "")
       setTimeout(function () {
         that.getdata();
-      }, 3000);
+      }, 1500);
   };
   sendPledgeModal = () => {
     let that = this;
@@ -411,13 +411,13 @@ class Seed extends React.Component<any, Seeds> {
       }
       service.getTransactionReceipt(res).then((data) => {
         if (data != null) {
-          that.loading("loading", false, "请求成功", successIcon)
+          that.loading("loading", false, "success", successIcon)
           setTimeout(function () {
             that.getdata();
-          }, 3000);
+          }, 1500);
         }
       }).catch(e => {
-        that.loading("loading", false, "请求失败", errIcon)
+        that.loading("loading", false, "error", errIcon)
       });
     }).catch((e) => {
       this.setState({
@@ -426,7 +426,7 @@ class Seed extends React.Component<any, Seeds> {
       that.loading("loading", true, "", "")
       setTimeout(function () {
         that.getdata();
-      }, 3000);
+      }, 1500);
     });
   };
 
@@ -467,14 +467,14 @@ class Seed extends React.Component<any, Seeds> {
       }
       service.getTransactionReceipt(res).then((data) => {
         if (data != null) {
-          that.loading("loading", false, "请求成功", successIcon)
+          that.loading("loading", false, "success", successIcon)
           setTimeout(function () {
             that.getdata();
-          }, 3000);
+          }, 1500);
         }
 
       }).catch(e => {
-        that.loading("loading", false, "请求失败", errIcon)
+        that.loading("loading", false, "error", errIcon)
       });
     }).catch(e => {
       message.error(typeof e == "object" ? e.messge : e)
@@ -501,14 +501,14 @@ class Seed extends React.Component<any, Seeds> {
         }
         service.getTransactionReceipt(res).then((data) => {
           if (data != null) {
-            that.loading("loading", false, "请求成功", successIcon)
+            that.loading("loading", false, "success", successIcon)
             setTimeout(function () {
               that.getdata();
-            }, 3000);
+            }, 1500);
           }
 
         }).catch(e => {
-          that.loading("loading", false, "请求失败", errIcon)
+          that.loading("loading", false, "error", errIcon)
         });
       })
     }
@@ -525,14 +525,14 @@ class Seed extends React.Component<any, Seeds> {
       }
       service.getTransactionReceipt(res).then((data) => {
         if (data != null) {
-          that.loading("loading", false, "请求成功", successIcon)
+          that.loading("loading", false, "success", successIcon)
           setTimeout(function () {
             that.getdata();
-          }, 3000);
+          }, 1500);
         }
 
       }).catch(e => {
-        that.loading("loading", false, "请求失败", errIcon)
+        that.loading("loading", false, "error", errIcon)
       });
     })
   }
@@ -632,7 +632,7 @@ class Seed extends React.Component<any, Seeds> {
     that.loading("loading", true, "", "")
     setTimeout(function () {
       that.getdata();
-    }, 15000);
+    }, 7000);
   }
   openRules() {
     let that = this;
@@ -665,10 +665,6 @@ class Seed extends React.Component<any, Seeds> {
     that.setState({
       visiblelook: false
     })
-    that.loading("loading", true, "", "")
-      setTimeout(function () {
-        that.getdata();
-      }, 3000);
   };
   viewDetail(e: any) {
     let that = this;
@@ -688,7 +684,7 @@ class Seed extends React.Component<any, Seeds> {
     that.loading("loading", true, "", "")
       setTimeout(function () {
         that.getdata();
-      }, 3000);
+      }, 1500);
   }
 
   loading = (loadingbox: string, status: boolean, description: string, message: any) => {
@@ -726,30 +722,30 @@ class Seed extends React.Component<any, Seeds> {
                 </h2>
                 <p className="rules-c">
                   *
-                  SEEDMIX是SEED的MIX版本，旨在探索去中⼼化⾦融的⾏为逻辑，和治理⽆关
+                  {i18n.t("rule2")}
                 </p>
                 <p>
                   ‣
-                  SEEDMIX不预设发⾏总量
-                  <span className="rules-c">（和SEED⼀样）</span>
+                  {i18n.t("rule3")}
+                  <span className="rules-c"> {i18n.t("rule4")}</span>
                 </p>
                 <p>
                   ‣
-                  唯⼀产出机制为质押SERO获得，每在SEEDMIX智能合约中质押100SERO，可以在10天内总共得到1个SEEDMIX
+                  {i18n.t("rule5")}
                    </p>
                 <p>
                   ‣
-                  任何账户向SEEDMIX智能合约发送SEEDMIX，⽴即获得SEEDMIX数量*100的SERO，同时这些SEEDMIX将打⼊⿊洞地址销毁（但是上限只能获得⾃⼰质押的SERO总量，超出上限部分将⽆法发送合约交易
-                  <span className="rules-c">（和SEED的核⼼差异）</span>
+                  {i18n.t("rule6")}
+                  <span className="rules-c"> {i18n.t("rule7")}</span>
                 </p>
                 <p>
                   ‣
-                  SEEDMIX合约上线后，任何⼈都能参与SEEDMIX的质押发⾏
+                  {i18n.t("rule8")}
                 </p>
                 <p>
                   ‣
-                  实验室会率先质押10000SERO，并将每天产出的SEEDMIX，以1：5SERO提交到CORSWAP提供SEEDMIX/SERO的流动性
-                  <span className="rules-c">（和SEED有不同的发⾏价）
+                  {i18n.t("rule9")}
+                  <span className="rules-c"> {i18n.t("rule10")}
                   </span>
                 </p>
                 <h2>
@@ -831,8 +827,7 @@ class Seed extends React.Component<any, Seeds> {
             </div>
             <div className="seed-header-title">
               <p>
-                {/* {i18n.t("SeroEcologicalLaboratorygovernancetoken")} */}
-                SERO实验室2号项⽬
+                {i18n.t("SEROLab")}
               </p>
             </div>
           </div>
@@ -888,8 +883,7 @@ class Seed extends React.Component<any, Seeds> {
             <div className="content-btn">
               <div>
                 <Statistic
-                  // title={i18n.t("Totalpledge")}
-                  title="剩余质押总数"
+                  title={i18n.t("Totalremainingpledge")}
                   value={`${this.state.backedValue} SERO`} valueStyle={{ color: '#FFFFFF' }} />
                 <Modal
                   title={i18n.t("Inputthenumberofseedcultured")}
@@ -1031,7 +1025,7 @@ class Seed extends React.Component<any, Seeds> {
               </Descriptions.Item>
               <Descriptions.Item label="">
                 <Statistic value={detailModal.seedmixrecyclenum}
-                  title="已回收"
+                  title={i18n.t("Reclaimed")}
                   suffix={"SEEDMIX"} precision={3} />
               </Descriptions.Item>
             </Descriptions>
@@ -1043,7 +1037,7 @@ class Seed extends React.Component<any, Seeds> {
               </Descriptions.Item>
               <Descriptions.Item span={1}>
                 <Statistic value={`${new BigNumber((detailModal.Withdrawn && detailModal.Withdrawn.toString(10))).minus(detailModal.seedmixrecyclenum)}`}
-                  title="可回收"
+                  title={i18n.t("Recyclable")}
                   suffix={"SEEDMIX"} precision={3} />
               </Descriptions.Item>
             </Descriptions>
@@ -1058,24 +1052,27 @@ class Seed extends React.Component<any, Seeds> {
               </Descriptions.Item>
               <Descriptions.Item span={1}>
                 <ul>
-                  {new BigNumber(detailModal.Withdrawn && detailModal.Withdrawn.toString(10)).minus(detailModal.seedmixrecyclenum).toNumber() === 0 ? <li className="message-success">无SEEDMIX</li> : <li>{new BigNumber(detailModal.Withdrawn && detailModal.Withdrawn.toString(10)).minus(detailModal.seedmixrecyclenum).toNumber() >= 1 ? <div className="detailbtn" data-maxrecyclenum={`${new BigNumber((detailModal.Withdrawn && detailModal.Withdrawn.toString(10))).minus(detailModal.seedmixrecyclenum)}`} data-index={detailModal.index} onClick={(e) => this.recycle(e)}>回收</div> : <div className="message-success">回收需整数</div>}</li>}
-
+                  {new BigNumber(detailModal.Withdrawn && detailModal.Withdrawn.toString(10)).minus(detailModal.seedmixrecyclenum).toNumber() === 0 ? <li className="message-success">
+                    {i18n.t("NoSEEDMIX")}
+                    </li> : <li>{new BigNumber(detailModal.Withdrawn && detailModal.Withdrawn.toString(10)).minus(detailModal.seedmixrecyclenum).toNumber() >= 1 ? <div className="detailbtn" data-maxrecyclenum={`${new BigNumber((detailModal.Withdrawn && detailModal.Withdrawn.toString(10))).minus(detailModal.seedmixrecyclenum)}`} data-index={detailModal.index} onClick={(e) => this.recycle(e)}>
+                      {i18n.t("recovery")}
+                      </div> : <div className="message-success">
+                      {i18n.t("Integerrequiredforrecycling")}
+                        </div>}</li>}
                 </ul>
                 <Modal
-                  title="输入回收SEEDMIX"
+                  title={i18n.t("EnterrecyclingSEEDMIX")}
                   visible={this.state.visiblerecycle}
                   onOk={this.sendRecycleModal}
                   onCancel={this.hideRecycleModal}
                   okText={i18n.t("confirm")}
                   cancelText={i18n.t("cancel")}
                 >
-
-                  <Tooltip title={`最大输入值${this.state.maxrecycleNum}`}>
+                  <Tooltip title={`${i18n.t("Maximuminputvalue")}${this.state.maxrecycleNum}`}>
                     <InputNumber type="number" min={1} max={this.state.maxrecycleNum} defaultValue={1} value={new BigNumber(this.state.recycleNum).toNumber()} onChange={(e) => this.onChangeRecycleNum(e)} className="inputWidth" ></InputNumber>
                   </Tooltip>
                 </Modal>
               </Descriptions.Item>
-
             </Descriptions>
           </div>
         </Modal>
@@ -1088,7 +1085,6 @@ class Seed extends React.Component<any, Seeds> {
             />
           </Spin>
         </div>
-
       </div>
     )
   }
