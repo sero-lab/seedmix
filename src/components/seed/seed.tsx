@@ -253,7 +253,6 @@ class Seed extends React.Component<any, Seeds> {
             dayNum: 0,
             todaypercentage: ""
           }
-          console.log(res.result[i].data.createTime)
           let createTime = parseInt(res.result[i].data.createTime);
           let lastWithDrawTime = parseInt(res.result[i].data.lastWithDrawTime);
           const extracted = that.transformation(createTime, lastWithDrawTime);
@@ -373,14 +372,12 @@ class Seed extends React.Component<any, Seeds> {
     let that = this;
     that.setState({
       pledgeNum: 100,
+      visiblePledge: false,
     });
     let cy = "SERO";
     contract.sendCy(that.state.account, cy, "0x" + new BigNumber(that.state.pledgeNum).multipliedBy(10 ** 18).toString(16)).then((res) => {
 
       if (res != null) {
-        that.setState({
-          visiblePledge: false,
-        });
       that.loading("loading", true, "", "")
       }
       service.getTransactionReceipt(res).then((data) => {
@@ -426,12 +423,12 @@ class Seed extends React.Component<any, Seeds> {
   sendRecycleModal = () => {
     let that = this;
     let cy = "SEEDMIX";
+    that.setState({
+      visibleDetail: false,
+      visiblerecycle: false,
+    });
     contract.recycle(that.state.account, cy, that.state.recycleIndex, "0x" + new BigNumber(that.state.recycleNum).multipliedBy(10 ** 18).toString(16)).then((res) => {
       if (res != null) {
-        that.setState({
-          visibleDetail: false,
-          visiblerecycle: false,
-        });
       that.loading("loading", true, "", "")
       }
       service.getTransactionReceipt(res).then((data) => {
@@ -451,7 +448,6 @@ class Seed extends React.Component<any, Seeds> {
       visiblerecycle: false,
     });
   };
-
 
 
   Withdrawal(e: any) {
@@ -642,7 +638,6 @@ class Seed extends React.Component<any, Seeds> {
   }
 
   loading = (loadingbox: string, status: boolean, description: string, message: any) => {
-    console.log(loadingbox)
     let that = this;
     let Loading = that.state.loading;
     Loading.loadingbox = loadingbox;
