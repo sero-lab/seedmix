@@ -1,7 +1,7 @@
 import React from 'react';
 import contract from '../../api/contract';
 import service from '../../api/service';
-import { Spin, Alert, Modal, InputNumber, Input, Button, Statistic, Descriptions, Switch, Card, Tooltip } from 'antd';
+import { Spin, Alert, Modal, InputNumber, Input, Button, Statistic, Descriptions, Switch, Card, Tooltip, message } from 'antd';
 import { BigNumber } from "bignumber.js";
 import './seed.scss';
 import i18n from '../../i18n'
@@ -440,6 +440,8 @@ class Seed extends React.Component<any, Seeds> {
       }).catch(e => {
         that.loading("loading", false, "请求失败", errIcon)
       });
+    }).catch(e=>{
+      message.error(typeof e == "object"?e.messge:e)
     })
   };
 
@@ -587,6 +589,7 @@ class Seed extends React.Component<any, Seeds> {
     that.setState({
       visibleDetail: false
     })
+    that.getdata();
   }
   openRules() {
     let that = this;
