@@ -53,5 +53,6 @@
   "NoSEEDMIX":"No SEEDMIX",
   "Integerrequiredforrecycling":"Integer required for recycling",
   "EnterrecyclingSEEDMIX":"Enter recycling SEEDMIX",
-  "Maximuminputvalue":"Maximum input value"
+  "Maximuminputvalue":"Maximum input value",
+  "Totalrecoverable":"Total recoverable"
 }

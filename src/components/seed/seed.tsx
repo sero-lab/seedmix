@@ -48,6 +48,7 @@ interface Seeds {
   visibleName: boolean,
   visiblePledge: boolean,
   visibleDetail: boolean,
+  visibleDetails: boolean,
   visibleRules: boolean,
   visiblelook: boolean,
   visiblerecycle: boolean,
@@ -80,6 +81,7 @@ class Seed extends React.Component<any, Seeds> {
     visibleName: false,
     visiblePledge: false,
     visibleDetail: false,
+    visibleDetails: false,
     visibleRules: false,
     visiblelook: false,
     visiblerecycle: false,
@@ -148,7 +150,6 @@ class Seed extends React.Component<any, Seeds> {
             tokenseronum: fromValue(res.tkn.SERO, 18).toNumber()
           })
         }
-
       })
       that.ListShow(userobj.MainPKr);
       that.myExchangeValue(userobj.MainPKr);
@@ -336,6 +337,7 @@ class Seed extends React.Component<any, Seeds> {
         returnValue: new BigNumber(res[2]).dividedBy(10 ** 18).toNumber(),
         backedValue: new BigNumber(res[0]).minus(new BigNumber(res[2]).multipliedBy(100)).dividedBy(10 ** 18).toNumber()
       })
+      
     })
   }
   showModal = () => {
@@ -447,6 +449,7 @@ class Seed extends React.Component<any, Seeds> {
       if (res != null) {
         that.setState({
           visibleDetail: false,
+          visibleDetails: false,
         });
         that.loading("loading", true, "", "")
       }
@@ -669,10 +672,25 @@ class Seed extends React.Component<any, Seeds> {
       detailModal: userobj
     })
   }
+
+  viewDetails = () =>{
+    let that = this;
+    that.setState({
+      visibleDetails: true,
+    })
+  }
+
   hideDetail = () => {
     let that = this;
     that.setState({
       visibleDetail: false,
+    })
+  }
+
+  hideDetails = () => {
+    let that = this;
+    that.setState({
+      visibleDetails: false,
     })
   }
 
@@ -856,20 +874,30 @@ class Seed extends React.Component<any, Seeds> {
               <div className="content-header-bottom">
                 <ul>
                   <li>
-                    <Statistic
+                    {/* <Statistic
                       title={`SERO${i18n.t("balance")}`}
-                      value={`${this.state.seroBalance !== "NaN" ? this.state.seroBalance : 0} `} valueStyle={{ color: '#FFFFFF' }} />
+                      value={`${this.state.seroBalance !== "NaN" ? this.state.seroBalance : 0} `} valueStyle={{ color: '#FFFFFF' }} /> */}
+                      {
+                        this.state.seroBalance!=="NaN"?<Statistic
+                        title={`SERO${i18n.t("balance")}`}
+                        value={this.state.seroBalance} valueStyle={{ color: '#FFFFFF' }} />:<Statistic
+                        title={`SERO${i18n.t("balance")}`}
+                        value={0} valueStyle={{ color: '#FFFFFF' }} />
+                      }
                   </li>
                   <li>
-                    <Statistic
+                    {/* <Statistic
                       title={`SEEDMIX${i18n.t("balance")}`}
-                      value={`${this.state.seedmixBalance !== "NaN" ? this.state.seedmixBalance : 0} `} valueStyle={{ color: '#FFFFFF' }} />
+                      value={`${this.state.seedmixBalance !== "NaN" ? this.state.seedmixBalance : 0} `} valueStyle={{ color: '#FFFFFF' }} /> */}
+                      {
+                        this.state.seedmixBalance!=="NaN"?<Statistic
+                        title={`SEEDMIX${i18n.t("balance")}`}
+                        value={this.state.seedmixBalance} valueStyle={{ color: '#FFFFFF' }} />:<Statistic
+                        title={`SEEDMIX${i18n.t("balance")}`}
+                        value={0} valueStyle={{ color: '#FFFFFF' }} />
+                      }
                   </li>
-                  <li>
-                    <Statistic
-                      title="已回收SEEDMIX"
-                      value={`${this.state.returnValue}`} valueStyle={{ color: '#FFFFFF' }} />
-                  </li>
+
                 </ul>
               </div>
             </div>
@@ -877,7 +905,7 @@ class Seed extends React.Component<any, Seeds> {
               <div>
                 <Statistic
                   title={i18n.t("Totalremainingpledge")}
-                  value={`${this.state.backedValue} SERO`} valueStyle={{ color: '#FFFFFF' }} />
+                  value={this.state.backedValue} suffix="SERO" valueStyle={{ color: '#FFFFFF' }} />
                 <button onClick={this.showPledgeModal}>
                   {i18n.t("culture")}
                   SEEDMIX
@@ -920,18 +948,21 @@ class Seed extends React.Component<any, Seeds> {
 
               <div>
                 <Statistic
-                  title="可回收总数"
-                  value={`${this.state.canReturnValue} SEEDMIX`} valueStyle={{ color: '#FFFFFF' }} />
+                  title={i18n.t("Totalrecoverable")}
+                  value={this.state.canReturnValue} suffix="SEEDMIX"  valueStyle={{ color: '#FFFFFF' }} />
                 {
-                  this.state.canReturnValue===0?<button className="no-clickone">无SEEDMIX</button>:<div>{
-                    this.state.canReturnValue >= 0 && this.state.canReturnValue < 1 ? <button className="no-clickone">回收需整数</button> : <button onClick={this.showRecycleModal} className="destruction">
-                      {i18n.t("recovery")}
+                  this.state.canReturnValue === 0 ? <button className="no-clickone">{i18n.t("recovery")}
+                  SEEDMIX
+                  </button> : <div>{
+                      this.state.canReturnValue >= 0 && this.state.canReturnValue < 1 ? <button className="no-clickone">
+                        {i18n.t("recovery")}
+                    SEEDMIX
+                      </button> : <button onClick={this.showRecycleModal} className="destruction">
+                          {i18n.t("recovery")}
                     SEEDMIX
                   </button>
-                  }</div>
+                    }</div>
                 }
-
-
                 <Modal
                   title={i18n.t("Pleaseenterthenumberofseedtorecycle")}
                   visible={this.state.visibleRecycle}
@@ -968,6 +999,78 @@ class Seed extends React.Component<any, Seeds> {
                     </li>
                   </ul>
                 </Modal>
+              </div>
+            </div>
+            <div className="content-btns">
+              <div>
+                <button onClick={this.viewDetails}>
+                  查看详情
+                </button>
+
+                <Modal
+                  title={i18n.t("details")}
+                  visible={this.state.visibleDetails}
+                  // visible={true}
+                  onCancel={this.hideDetails}
+                  footer={null}
+                  className="detail"
+                >
+                  <div className="detailModal">
+                    <Descriptions column={2}>
+                      <Descriptions.Item label="">
+                        <Statistic value={this.state.backedValue+this.state.returnValue*100}
+                          // title={i18n.t("Totalculture")}
+                          title="质押总数"
+                          suffix={"SERO"}  precision={3}/>
+                      </Descriptions.Item>
+
+                      <Descriptions.Item label="">
+                        <Statistic value={this.state.backedValue}
+                          // title={i18n.t("Incultivation")}
+                          title="剩余质押数"
+                          suffix={"SERO"} precision={3} />
+                      </Descriptions.Item>
+
+                    </Descriptions>
+                    <Descriptions column={2}>
+                      <Descriptions.Item label="">
+                        <Statistic value={this.state.returnValue+this.state.canReturnValue}
+                          // title={i18n.t("pledge")}
+                          title="已提取"
+                          suffix={"SEEDMIX"}  precision={3}/>
+                      </Descriptions.Item>
+                      <Descriptions.Item label="">
+                        <Statistic value={this.state.returnValue}
+                          // title={i18n.t("Harvested")}
+                          title="已回收"
+                          suffix={"SEEDMIX"} precision={3} />
+                      </Descriptions.Item>
+
+                    </Descriptions>
+                    <Descriptions column={2}>
+                      <Descriptions.Item >
+                        <Statistic value={this.state.canReturnValue}
+                          // title={i18n.t("Extractable")}
+                          title="可回收"
+                          suffix={"SEEDMIX"} precision={3} />
+                      </Descriptions.Item>
+                      <Descriptions.Item label="">
+                        <div className="recycle-c">
+                          {
+                            this.state.canReturnValue === 0 ? <button className="no-clickone">{i18n.t("recovery")}SEEDMIX
+                            </button> : <div>{this.state.canReturnValue >= 0 && this.state.canReturnValue < 1 ? <button className="no-clickone"> {i18n.t("recovery")}SEEDMIX</button> : <button onClick={this.showRecycleModal} className="button">{i18n.t("recovery")}SEEDMIX</button>
+                              }</div>
+                          }
+                        </div>
+
+                      </Descriptions.Item>
+                    </Descriptions>
+                  </div>
+                </Modal>
+
+
+
+
               </div>
             </div>
             <div className="content-list">

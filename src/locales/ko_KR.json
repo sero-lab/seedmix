@@ -53,5 +53,6 @@
   "NoSEEDMIX": "SEEDMIX 없음",
   "Integerrequiredforrecycling": "재활용에 필요한 정수",
   "EnterrecyclingSEEDMIX": "재활용 SEEDMIX 입력",
-  "Maximuminputvalue": "최대 입력 값"
+  "Maximuminputvalue": "최대 입력 값",
+  "Totalrecoverable":"총 복구 가능"
 }

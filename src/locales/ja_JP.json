@@ -53,5 +53,6 @@
   "NoSEEDMIX": "SEEDMIXなし",
   "Integerrequiredforrecycling": "リサイクルに必要な整数",
   "EnterrecyclingSEEDMIX": "リサイクルSEEDMIXを入力してください",
-  "Maximuminputvalue": "最大入力値"
+  "Maximuminputvalue": "最大入力値",
+  "Totalrecoverable":"総回収可能"
 }

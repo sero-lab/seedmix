@@ -53,5 +53,6 @@
     "NoSEEDMIX": "Няма SEEDMIX",
     "Integerrequiredforrecycling": "Цэлае цэлае, неабходнае для перапрацоўкі",
     "EnterrecyclingSEEDMIX": "Увядзіце перапрацоўку SEEDMIX",
-    "Maximuminputvalue": "Максімальнае значэнне ўводу"
+    "Maximuminputvalue": "Максімальнае значэнне ўводу",
+    "Totalrecoverable":"Усяго можна аднавіць"
 }

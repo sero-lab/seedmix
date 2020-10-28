@@ -132,14 +132,28 @@
                         background-color: #a7a538;
                         padding: 5px;
                         border-radius: 2px;
-                        margin: 14px 0;
                     }
 
                     .destruction {
                         background-color: #a7a538;
                     }
-
                 }
+            }
+
+            .content-btns{
+                margin: 0 25px;
+                div{
+                    text-align: center;
+                    button {
+                        width: 100%;
+                        border: none;
+                        color: #ffffff;
+                        background-color: #a7a538;
+                        padding: 5px;
+                        border-radius: 2px;
+                    }
+                }
+
             }
 
             .content-list {
@@ -362,6 +376,11 @@
 .no-clickone {
     pointer-events: none;
     background-color: gray !important;
+    width: 110px;
+    border: none;
+    color: #ffffff;
+    padding: 5px;
+    border-radius: 2px;
 }
 
 .modalbox {
@@ -488,4 +507,16 @@
 
 .loadingbox {
     display: none;
+}
+.recycle-c{
+    position: relative;
+    top: 50%;
+}
+.button {
+    width: 110px;
+    border: none;
+    color: #ffffff;
+    background-color: #a7a538;
+    padding: 5px;
+    border-radius: 2px;
 }

@@ -53,5 +53,6 @@
   "NoSEEDMIX":"无SEEDMIX",
   "Integerrequiredforrecycling":"回收需整数",
   "EnterrecyclingSEEDMIX":"输入回收SEEDMIX",
-  "Maximuminputvalue":"最大输入值"
+  "Maximuminputvalue":"最大输入值",
+  "Totalrecoverable":"可回收总数"
 }
