@@ -1,4 +1,4 @@
-export const address: string = "4pQT6y6xJPRo58VPnzPv6F7rYFzbNp8Hpp47CRgsrMeatCHtZ9qbaNdvbM2h33tLkfBZXtuUkkV6Z9aDryCxqb5A";
+export const address: string = "4RFegSDdS1bYggrsrHZjwYtob11eKSu1CvLfobNx5VXmRwNBnYLpyyeSZTU3THCDWi7Pa4pMyPsKuqSow23gidYZ";
 export const address1: string = "CZAjwxwJhbkxsJHoqTcKZNti4XyCtec182Ys2EHx4SuHEYHY76hk5hLNi1EhuQJkoAdRrDxEg6EVMpVEkzemVWv";
 export const abi: any =[
 	{
@@ -35,19 +35,6 @@ export const abi: any =[
 			{
 				"internalType": "uint256",
 				"name": "end",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "dayNum",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
 				"type": "uint256"
 			}
 		],
@@ -96,7 +83,7 @@ export const abi: any =[
 			},
 			{
 				"internalType": "uint256",
-				"name": "canReturnValue",
+				"name": "returnValue",
 				"type": "uint256"
 			}
 		],

@@ -925,7 +925,7 @@ class Seed extends React.Component<any, Seeds> {
                         </p>
                       </div>
                       <div>
-                        <InputNumber type="number" min={1} placeholder={`${i18n.t("message")}`} value={new BigNumber(this.state.pledgeNum).dividedBy(10 ** 2).toNumber()} parser={(v: any) => this.parseNum(v)} onChange={(e) => this.onChangeSeedMixNum(e)} className="inputWidth" />
+                        <InputNumber type="number" min={1} defaultValue={1} placeholder={`${i18n.t("message")}`} value={new BigNumber(this.state.pledgeNum).dividedBy(10 ** 2).toNumber()} parser={(v: any) => this.parseNum(v)} onChange={(e) => this.onChangeSeedMixNum(e)} className="inputWidth" />
                       </div>
                     </li>
                     <li>
@@ -978,7 +978,7 @@ class Seed extends React.Component<any, Seeds> {
                       </div>
                       <div>
                         <Tooltip title={`${i18n.t("Maximuminputvalue")}${Math.floor(this.state.canReturnValue)}`}>
-                          <InputNumber type="number" min={1} precision={0} max={Math.floor(this.state.canReturnValue)} defaultValue={1} parser={(v: any) => this.parseNum(v)} onChange={(e) => this.onChangeSeroNum(e)} className="inputWidth" ></InputNumber>
+                          <InputNumber type="number" min={1}  max={Math.floor(this.state.canReturnValue)} defaultValue={1} parser={(v: any) => this.parseNum(v)} onChange={(e) => this.onChangeSeroNum(e)} className="inputWidth" ></InputNumber>
                         </Tooltip>
                       </div>
                     </li>
