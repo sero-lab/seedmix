@@ -359,6 +359,11 @@
     display: none;
 }
 
+.no-clickone {
+    pointer-events: none;
+    background-color: gray !important;
+}
+
 .modalbox {
     li {
         display: flex;
@@ -372,7 +377,7 @@
             }
 
             &:first-child {
-                flex: 2;
+                flex: 3;
             }
 
             &:last-child {

@@ -1,7 +1,7 @@
 import React from 'react';
 import contract from '../../api/contract';
 import service from '../../api/service';
-import { Spin, Alert, Modal, InputNumber, Input, Button, Statistic, Descriptions, Switch, Card, Tooltip, message } from 'antd';
+import { Spin, Alert, Modal, InputNumber, Input, Button, Statistic, Descriptions, Switch, Card, Tooltip } from 'antd';
 import { BigNumber } from "bignumber.js";
 import './seed.scss';
 import i18n from '../../i18n'
@@ -13,9 +13,6 @@ const successIcon = <CheckCircleOutlined style={{ fontSize: 24 }} />
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 // import { composeInitialProps } from 'react-i18next';
 const { Countdown } = Statistic;
-
-
-
 
 
 interface item {
@@ -33,7 +30,6 @@ interface item {
   dayNum: number,
   todaypercentage: string
 }
-
 
 interface Seeds {
   seedmixBalance: string,
@@ -190,7 +186,6 @@ class Seed extends React.Component<any, Seeds> {
       contract.getList(str).then((res) => {
         console.log(res)
         let listdata: Array<item> = [];
-
         for (let i = 0; i < res.result.length; i++) {
           let objShow = {
             index: "",
@@ -338,8 +333,8 @@ class Seed extends React.Component<any, Seeds> {
       console.log(res)
       that.setState({
         canReturnValue: new BigNumber(res[1]).minus(res[2]).dividedBy(10 ** 18).toNumber(),
-        returnValue: new BigNumber(res[1]).dividedBy(10 ** 18).toNumber(),
-        backedValue: new BigNumber(res[0]).dividedBy(10 ** 18).toNumber()
+        returnValue: new BigNumber(res[2]).dividedBy(10 ** 18).toNumber(),
+        backedValue: new BigNumber(res[0]).minus(new BigNumber(res[2]).multipliedBy(100)).dividedBy(10 ** 18).toNumber()
       })
     })
   }
@@ -354,7 +349,7 @@ class Seed extends React.Component<any, Seeds> {
       visibleName: false,
     });
 
-    that.loading("loading", true, "", "")
+    that.loading("loading", true, "", "");
     setTimeout(function () {
       that.getdata();
     }, 1500);
@@ -376,6 +371,10 @@ class Seed extends React.Component<any, Seeds> {
       seedmixBalance: new BigNumber(userobj.Balance.get("SEEDMIX")).dividedBy(10 ** 18).toFixed(2),
       seroBalance: new BigNumber(userobj.Balance.get("SERO")).dividedBy(10 ** 18).toFixed(2),
     });
+    that.loading("loading", true, "", "");
+    setTimeout(function () {
+      that.getdata();
+    }, 2000);
   };
   showPledgeModal = () => {
     this.setState({
@@ -388,10 +387,7 @@ class Seed extends React.Component<any, Seeds> {
     that.setState({
       visiblePledge: false,
     });
-    that.loading("loading", true, "", "")
-    setTimeout(function () {
-      that.getdata();
-    }, 1500);
+    that.getdata();
   };
   sendPledgeModal = () => {
     let that = this;
@@ -400,7 +396,6 @@ class Seed extends React.Component<any, Seeds> {
     });
     let cy = "SERO";
     contract.sendCy(that.state.account, cy, "0x" + new BigNumber(that.state.pledgeNum).multipliedBy(10 ** 18).toString(16)).then((res) => {
-
       if (res != null) {
         that.loading("loading", true, "", "")
       }
@@ -472,7 +467,6 @@ class Seed extends React.Component<any, Seeds> {
       });
     });
   };
-
 
   Withdrawal(e: any) {
     let that = this;
@@ -597,7 +591,6 @@ class Seed extends React.Component<any, Seeds> {
     return information;
   }
   onChangeSeedMixNum(e: any) {
-
     let that = this;
     if (e != null) {
       var a = Math.floor(e)
@@ -610,7 +603,6 @@ class Seed extends React.Component<any, Seeds> {
       })
     }
   }
-
 
   onChangeSeroNum(e: any) {
     let that = this;
@@ -682,10 +674,6 @@ class Seed extends React.Component<any, Seeds> {
     that.setState({
       visibleDetail: false,
     })
-    that.loading("loading", true, "", "")
-    setTimeout(function () {
-      that.getdata();
-    }, 1500);
   }
 
   loading = (loadingbox: string, status: boolean, description: string, message: any) => {
@@ -879,7 +867,7 @@ class Seed extends React.Component<any, Seeds> {
                   </li>
                   <li>
                     <Statistic
-                      title="SEEDMIX回收总数"
+                      title="已回收SEEDMIX"
                       value={`${this.state.returnValue}`} valueStyle={{ color: '#FFFFFF' }} />
                   </li>
                 </ul>
@@ -934,10 +922,16 @@ class Seed extends React.Component<any, Seeds> {
                 <Statistic
                   title="可回收总数"
                   value={`${this.state.canReturnValue} SEEDMIX`} valueStyle={{ color: '#FFFFFF' }} />
-                <button onClick={this.showRecycleModal} className="destruction">
-                  {i18n.t("recovery")}
-                  SEEDMIX
-                </button>
+                {
+                  this.state.canReturnValue===0?<button className="no-clickone">无SEEDMIX</button>:<div>{
+                    this.state.canReturnValue >= 0 && this.state.canReturnValue < 1 ? <button className="no-clickone">回收需整数</button> : <button onClick={this.showRecycleModal} className="destruction">
+                      {i18n.t("recovery")}
+                    SEEDMIX
+                  </button>
+                  }</div>
+                }
+
+
                 <Modal
                   title={i18n.t("Pleaseenterthenumberofseedtorecycle")}
                   visible={this.state.visibleRecycle}
