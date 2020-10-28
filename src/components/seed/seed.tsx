@@ -69,8 +69,7 @@ class Seed extends React.Component<any, Seeds> {
     backedValue: 0,
     returnValue: 0,
     canReturnValue: 0,
-    // time: 86400,
-    time: 300,
+    time: 86400,
     data: [],
     dataArr: [],
     showUserName: "",
@@ -103,12 +102,6 @@ class Seed extends React.Component<any, Seeds> {
     let that = this;
     service.setLanguage();
     that.getdata();
-    // let interId: any = sessionStorage.getItem("interId");
-    // if (interId) {
-    //   clearInterval(interId)
-    // }
-    // interId = setInterval(() => that.getdata(), 5 * 10 ** 3);
-    // sessionStorage.setItem("interId", interId);
   }
 
   getdata = () => {
@@ -167,6 +160,7 @@ class Seed extends React.Component<any, Seeds> {
 
     that.loading("loadingbox", false, "", null);
     that.setState({
+      RecycleNum: 1,
       pledgeNum: 100,
     })
   }
@@ -401,7 +395,7 @@ class Seed extends React.Component<any, Seeds> {
       }
       service.getTransactionReceipt(res).then((data) => {
         if (data != null) {
-          that.loading("loading", false, "success", successIcon)
+          that.loading("loading", false, "SUCCESSFULLY", successIcon)
           setTimeout(function () {
             that.getdata();
           }, 1500);
@@ -432,6 +426,7 @@ class Seed extends React.Component<any, Seeds> {
       visibleRecycle: false,
       RecycleNum: 1
     });
+    this.getdata();
   };
   sendRecycleModal = () => {
     let that = this;
@@ -450,7 +445,7 @@ class Seed extends React.Component<any, Seeds> {
       }
       service.getTransactionReceipt(res).then((data) => {
         if (data != null) {
-          that.loading("loading", false, "success", successIcon)
+          that.loading("loading", false, "SUCCESSFULLY", successIcon)
           setTimeout(function () {
             that.getdata();
           }, 1500);
@@ -479,7 +474,7 @@ class Seed extends React.Component<any, Seeds> {
         }
         service.getTransactionReceipt(res).then((data) => {
           if (data != null) {
-            that.loading("loading", false, "success", successIcon)
+            that.loading("loading", false, "SUCCESSFULLY", successIcon)
             setTimeout(function () {
               that.getdata();
             }, 1500);
@@ -503,7 +498,7 @@ class Seed extends React.Component<any, Seeds> {
       }
       service.getTransactionReceipt(res).then((data) => {
         if (data != null) {
-          that.loading("loading", false, "success", successIcon)
+          that.loading("loading", false, "SUCCESSFULLY", successIcon)
           setTimeout(function () {
             that.getdata();
           }, 1500);
@@ -978,7 +973,7 @@ class Seed extends React.Component<any, Seeds> {
                       </div>
                       <div>
                         <Tooltip title={`${i18n.t("Maximuminputvalue")}${Math.floor(this.state.canReturnValue)}`}>
-                          <InputNumber type="number" min={1}  max={Math.floor(this.state.canReturnValue)} defaultValue={1} parser={(v: any) => this.parseNum(v)} onChange={(e) => this.onChangeSeroNum(e)} className="inputWidth" ></InputNumber>
+                          <InputNumber type="number" min={1}  max={Math.floor(this.state.canReturnValue)} defaultValue={1} value={this.state.RecycleNum} parser={(v: any) => this.parseNum(v)} onChange={(e) => this.onChangeSeroNum(e)} className="inputWidth" ></InputNumber>
                         </Tooltip>
                       </div>
                     </li>
@@ -1171,7 +1166,7 @@ class Seed extends React.Component<any, Seeds> {
           </div>
         </Modal>
         <div className={this.state.loading.loadingbox}>
-          <Spin indicator={antIcon} spinning={this.state.loading.status} tip="Loading...">
+          <Spin indicator={antIcon} spinning={this.state.loading.status} tip="PENDING...">
             <Alert
               message={this.state.loading.message}
               description={this.state.loading.description}
