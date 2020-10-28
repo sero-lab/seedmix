@@ -175,10 +175,7 @@ class Seed extends React.Component<any, Seeds> {
     that.setState({
       radioStatu: e
     });
-    that.loading("loading", true, "", "")
-    setTimeout(function () {
-      that.getdata();
-    }, 7000);
+    that.getdata();
   }
 
   ListShow = (str: string) => {
@@ -298,7 +295,7 @@ class Seed extends React.Component<any, Seeds> {
           objShow.seedmixrecyclenum = new BigNumber(res.result[i].data.hasReturned).dividedBy(10 ** 18).toString();
           objShow.creatData = that.formatTime(createTime * 1000, 'M/D/Y h:m');
           objShow.countDown = countDown;
-          if(objShow.showDetail){
+          if (objShow.showDetail) {
             listdata.push(objShow)
           }
         }
@@ -338,7 +335,7 @@ class Seed extends React.Component<any, Seeds> {
         returnValue: new BigNumber(res[2]).dividedBy(10 ** 18).toNumber(),
         backedValue: new BigNumber(res[0]).minus(new BigNumber(res[2]).multipliedBy(100)).dividedBy(10 ** 18).toNumber()
       })
-      
+
     })
   }
   showModal = () => {
@@ -423,10 +420,9 @@ class Seed extends React.Component<any, Seeds> {
     });
   };
 
-
-
   showRecycleModal = () => {
     this.setState({
+      visibleDetails:false,
       visibleRecycle: true,
       RecycleNum: 1
     });
@@ -672,7 +668,7 @@ class Seed extends React.Component<any, Seeds> {
     })
   }
 
-  viewDetails = () =>{
+  viewDetails = () => {
     let that = this;
     that.setState({
       visibleDetails: true,
@@ -705,8 +701,8 @@ class Seed extends React.Component<any, Seeds> {
     })
   }
 
-  parseNum = (v:string)=>{
-    if(!v){
+  parseNum = (v: string) => {
+    if (!v) {
       return ""
     }
     return Math.floor(new BigNumber(v).toNumber())
@@ -880,22 +876,22 @@ class Seed extends React.Component<any, Seeds> {
               <div className="content-header-bottom">
                 <ul>
                   <li>
-                      {
-                        this.state.seroBalance!=="NaN"?<Statistic
+                    {
+                      this.state.seroBalance !== "NaN" ? <Statistic
                         title={`SERO${i18n.t("balance")}`}
-                        value={this.state.seroBalance} valueStyle={{ color: '#FFFFFF' }} />:<Statistic
-                        title={`SERO${i18n.t("balance")}`}
-                        value={0} valueStyle={{ color: '#FFFFFF' }} />
-                      }
+                        value={this.state.seroBalance} valueStyle={{ color: '#FFFFFF' }} /> : <Statistic
+                          title={`SERO${i18n.t("balance")}`}
+                          value={0} valueStyle={{ color: '#FFFFFF' }} />
+                    }
                   </li>
                   <li>
-                      {
-                        this.state.seedmixBalance!=="NaN"?<Statistic
+                    {
+                      this.state.seedmixBalance !== "NaN" ? <Statistic
                         title={`SEEDMIX${i18n.t("balance")}`}
-                        value={this.state.seedmixBalance} valueStyle={{ color: '#FFFFFF' }} />:<Statistic
-                        title={`SEEDMIX${i18n.t("balance")}`}
-                        value={0} valueStyle={{ color: '#FFFFFF' }} />
-                      }
+                        value={this.state.seedmixBalance} valueStyle={{ color: '#FFFFFF' }} /> : <Statistic
+                          title={`SEEDMIX${i18n.t("balance")}`}
+                          value={0} valueStyle={{ color: '#FFFFFF' }} />
+                    }
                   </li>
 
                 </ul>
@@ -929,7 +925,7 @@ class Seed extends React.Component<any, Seeds> {
                         </p>
                       </div>
                       <div>
-                        <InputNumber type="number" min={1} placeholder={`${i18n.t("message")}`} value={new BigNumber(this.state.pledgeNum).dividedBy(10 ** 2).toNumber()} parser={(v:any)=>this.parseNum(v)} onChange={(e) => this.onChangeSeedMixNum(e)} className="inputWidth" />
+                        <InputNumber type="number" min={1} placeholder={`${i18n.t("message")}`} value={new BigNumber(this.state.pledgeNum).dividedBy(10 ** 2).toNumber()} parser={(v: any) => this.parseNum(v)} onChange={(e) => this.onChangeSeedMixNum(e)} className="inputWidth" />
                       </div>
                     </li>
                     <li>
@@ -949,7 +945,7 @@ class Seed extends React.Component<any, Seeds> {
               <div>
                 <Statistic
                   title={i18n.t("Totalrecoverable")}
-                  value={this.state.canReturnValue} suffix="SEEDMIX"  valueStyle={{ color: '#FFFFFF' }} />
+                  value={this.state.canReturnValue} suffix="SEEDMIX" valueStyle={{ color: '#FFFFFF' }} />
                 {
                   this.state.canReturnValue === 0 ? <button className="no-clickone">{i18n.t("recovery")}
                   SEEDMIX
@@ -982,7 +978,7 @@ class Seed extends React.Component<any, Seeds> {
                       </div>
                       <div>
                         <Tooltip title={`${i18n.t("Maximuminputvalue")}${Math.floor(this.state.canReturnValue)}`}>
-                          <InputNumber type="number" min={1} precision={0} max={Math.floor(this.state.canReturnValue)} defaultValue={1} parser={(v:any)=>this.parseNum(v)} onChange={(e) => this.onChangeSeroNum(e)} className="inputWidth" ></InputNumber>
+                          <InputNumber type="number" min={1} precision={0} max={Math.floor(this.state.canReturnValue)} defaultValue={1} parser={(v: any) => this.parseNum(v)} onChange={(e) => this.onChangeSeroNum(e)} className="inputWidth" ></InputNumber>
                         </Tooltip>
                       </div>
                     </li>
@@ -1016,9 +1012,9 @@ class Seed extends React.Component<any, Seeds> {
                   <div className="detailModal">
                     <Descriptions column={2}>
                       <Descriptions.Item label="">
-                        <Statistic value={this.state.backedValue+this.state.returnValue*100}
+                        <Statistic value={this.state.backedValue + this.state.returnValue * 100}
                           title={i18n.t("Totalpledge")}
-                          suffix={"SERO"}  precision={3}/>
+                          suffix={"SERO"} precision={3} />
                       </Descriptions.Item>
                       <Descriptions.Item label="">
                         <Statistic value={this.state.backedValue}
@@ -1028,21 +1024,20 @@ class Seed extends React.Component<any, Seeds> {
                     </Descriptions>
                     <Descriptions column={2}>
                       <Descriptions.Item label="">
-                        <Statistic value={this.state.returnValue+this.state.canReturnValue}
-                          title={i18n.t("Extracted")}
-                          suffix={"SEEDMIX"}  precision={3}/>
+                        <Statistic value={this.state.returnValue + this.state.canReturnValue}
+                          title={i18n.t("Totalnumberwithdrawn")}
+                          suffix={"SEEDMIX"} precision={3} />
                       </Descriptions.Item>
                       <Descriptions.Item label="">
                         <Statistic value={this.state.returnValue}
-                          title={i18n.t("Reclaimed")}
+                          title={i18n.t("Totalrecovered")}
                           suffix={"SEEDMIX"} precision={3} />
                       </Descriptions.Item>
-
                     </Descriptions>
                     <Descriptions column={2}>
                       <Descriptions.Item >
                         <Statistic value={this.state.canReturnValue}
-                          title={i18n.t("Recyclable")}
+                          title={i18n.t("Totalrecoverable")}
                           suffix={"SEEDMIX"} precision={3} />
                       </Descriptions.Item>
                       <Descriptions.Item label="">

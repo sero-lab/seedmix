@@ -6,7 +6,7 @@
   "confirm":"确认",
   "cancel":"取消",
   "operation":"操作",
-  "withdrawal":"提现",
+  "withdrawal":"提取",
   "ItcostsSERO":"需花费SERO",
   "Effective":"有效",
   "whole":"全部",
@@ -56,5 +56,7 @@
   "Maximuminputvalue":"最大输入值",
   "Totalrecoverable":"可回收总数",
   "seedetails":"查看详情",
-  "message":"请输入整数"
+  "message":"请输入整数",
+  "Totalnumberwithdrawn":"已提取总数",
+  "Totalrecovered":"已回收总数"
 }

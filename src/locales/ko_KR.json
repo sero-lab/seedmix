@@ -6,7 +6,7 @@
   "confirm": "확인",
   "cancel": "취소",
   "operation": "조작",
-  "withdrawal": "현금 인출",
+  "withdrawal": "추출물",
   "ItcostsSERO": "SERO 비용",
   "Effective": "유효한",
   "whole": "모두",
@@ -56,5 +56,7 @@
   "Maximuminputvalue": "최대 입력 값",
   "Totalrecoverable":"총 복구 가능",
   "seedetails":"자세히보다",
-  "message":"정수를 입력하세요"
+  "message":"정수를 입력하세요",
+  "Totalnumberwithdrawn":"인출 된 총 수",
+  "Totalrecovered":"총 복구"
 }

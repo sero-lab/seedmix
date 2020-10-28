@@ -6,7 +6,7 @@
   "confirm":"Confirm",
   "cancel":"Cancel",
   "operation":"Operating",
-  "withdrawal":"Withdraw",
+  "withdrawal":"extract",
   "ItcostsSERO":"It costs SERO",
   "Effective":"Effective",
   "whole":"All",
@@ -56,5 +56,7 @@
   "Maximuminputvalue":"Maximum input value",
   "Totalrecoverable":"Total recoverable",
   "seedetails":"see details",
-  "message":"Please enter an integers"
+  "message":"Please enter an integers",
+  "Totalnumberwithdrawn":"Total number withdrawn",
+  "Totalrecovered":"Total recovered"
 }
