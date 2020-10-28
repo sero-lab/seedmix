@@ -1,6 +1,6 @@
-export const address: string = "4UpHhBts3SLg6byNg1qkeGNtKdbBWDD98M7ckGhEEW6HRn7qyEKVrh7XGLQMEH622BLMz9ck7wZZJzJmx7p39C59";
+export const address: string = "43SNkz2yQNvud341Lof6C5mAMHWnFA5RU1xzdVk9kvbftj6y7zdNNYuB84cGTuHjVe7rxtbgBFZiRCzeRyAm37Hy";
 export const address1: string = "CZAjwxwJhbkxsJHoqTcKZNti4XyCtec182Ys2EHx4SuHEYHY76hk5hLNi1EhuQJkoAdRrDxEg6EVMpVEkzemVWv";
-export const abi: any = [
+export const abi: any =[
 	{
 		"inputs": [
 			{
@@ -11,35 +11,6 @@ export const abi: any = [
 		],
 		"stateMutability": "nonpayable",
 		"type": "constructor"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_createTime",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_lastWithDrawTime",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_total",
-				"type": "uint256"
-			}
-		],
-		"name": "Calculation",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "availableamount",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
 	},
 	{
 		"inputs": [
@@ -120,7 +91,12 @@ export const abi: any = [
 			},
 			{
 				"internalType": "uint256",
-				"name": "claimantValue",
+				"name": "withDrawValue",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "canReturnValue",
 				"type": "uint256"
 			}
 		],
@@ -159,19 +135,14 @@ export const abi: any = [
 								"internalType": "uint256",
 								"name": "total",
 								"type": "uint256"
-							},
-							{
-								"internalType": "uint256",
-								"name": "hasReturned",
-								"type": "uint256"
 							}
 						],
-						"internalType": "struct SeedSwap.Record",
+						"internalType": "struct SeedMixSwap.Record",
 						"name": "data",
 						"type": "tuple"
 					}
 				],
-				"internalType": "struct SeedSwap.RecordInfo[]",
+				"internalType": "struct SeedMixSwap.RecordInfo[]",
 				"name": "result",
 				"type": "tuple[]"
 			}
@@ -211,19 +182,14 @@ export const abi: any = [
 								"internalType": "uint256",
 								"name": "total",
 								"type": "uint256"
-							},
-							{
-								"internalType": "uint256",
-								"name": "hasReturned",
-								"type": "uint256"
 							}
 						],
-						"internalType": "struct SeedSwap.Record",
+						"internalType": "struct SeedMixSwap.Record",
 						"name": "data",
 						"type": "tuple"
 					}
 				],
-				"internalType": "struct SeedSwap.RecordInfo[]",
+				"internalType": "struct SeedMixSwap.RecordInfo[]",
 				"name": "result",
 				"type": "tuple[]"
 			}
@@ -286,33 +252,9 @@ export const abi: any = [
 				"internalType": "uint256",
 				"name": "total",
 				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "hasReturned",
-				"type": "uint256"
 			}
 		],
 		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "index",
-				"type": "uint256"
-			}
-		],
-		"name": "recycle",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "payable",
 		"type": "function"
 	},
 	{

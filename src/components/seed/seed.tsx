@@ -38,8 +38,9 @@ interface item {
 interface Seeds {
   seedmixBalance: string,
   seroBalance: string,
+  returnValue: number,
   backedValue: number,
-  claimantValue: number,
+  canReturnValue: number,
   time: number,
   data: Array<any>,
   dataArr: Array<any>,
@@ -55,14 +56,12 @@ interface Seeds {
   visiblelook: boolean,
   visiblerecycle: boolean,
   pledgeNum: any,
-  destructionNum: any,
+  visibleRecycle: boolean,
+  RecycleNum: any,
   detailModal: any,
   radioStatu: boolean,
   tokennum: number,
   tokenseronum: number,
-  recycleIndex: number,
-  maxrecycleNum: number,
-  recycleNum: number,
   loading: any
 }
 
@@ -71,7 +70,8 @@ class Seed extends React.Component<any, Seeds> {
     seedmixBalance: "",
     seroBalance: "",
     backedValue: 0,
-    claimantValue: 0,
+    returnValue: 0,
+    canReturnValue: 0,
     // time: 86400,
     time: 300,
     data: [],
@@ -88,14 +88,12 @@ class Seed extends React.Component<any, Seeds> {
     visiblelook: false,
     visiblerecycle: false,
     pledgeNum: 100,
-    destructionNum: 1,
+    visibleRecycle: false,
+    RecycleNum: 1,
     detailModal: {},
     radioStatu: false,
     tokennum: 0,
     tokenseronum: 0,
-    recycleIndex: 0,
-    maxrecycleNum: 0,
-    recycleNum: 1,
     loading: {
       loadingbox: "loadingbox",
       status: false,
@@ -145,7 +143,7 @@ class Seed extends React.Component<any, Seeds> {
         }
       })
       contract.balanceOf().then((res) => {
-        if (res.tkn.SERO == null) {
+        if (res.tkn == null) {
           that.setState({
             tokenseronum: 0
           })
@@ -173,7 +171,6 @@ class Seed extends React.Component<any, Seeds> {
     that.loading("loadingbox", false, "", null);
     that.setState({
       pledgeNum: 100,
-      recycleNum: 1
     })
   }
   radiobtn = (e: any) => {
@@ -186,7 +183,6 @@ class Seed extends React.Component<any, Seeds> {
       that.getdata();
     }, 7000);
   }
-
 
   ListShow = (str: string) => {
     let that = this;
@@ -216,7 +212,6 @@ class Seed extends React.Component<any, Seeds> {
           const extracted = that.transformation(createTime, lastWithDrawTime);
           const newTime = parseInt((new Date().getTime() / 1000).toString());
           const extractable = that.transformation(createTime, newTime);
-
           const countDown = (createTime + that.state.time * extracted.today) * 1000;
           if (extracted.percentage !== 0) {
             objShow.Withdrawn = fromValue(res.result[i].data.total, 18).multipliedBy(extracted.percentage)
@@ -312,13 +307,10 @@ class Seed extends React.Component<any, Seeds> {
         that.setState({
           Listdata: listdata
         })
-        console.log(that.state.Listdata, "454545")
       }).catch(e => {
       }).catch((e) => {
       })
     }
-
-
   }
   formatNumber(n: any) {
     n = n.toString()
@@ -339,11 +331,14 @@ class Seed extends React.Component<any, Seeds> {
     }
     return format;
   }
+
   myExchangeValue = (str: string) => {
     let that = this;
     contract.myExchangeValue(str).then((res) => {
+      console.log(res)
       that.setState({
-        claimantValue: new BigNumber(res[1]).dividedBy(10 ** 18).toNumber(),
+        canReturnValue: new BigNumber(res[1]).minus(res[2]).dividedBy(10 ** 18).toNumber(),
+        returnValue: new BigNumber(res[1]).dividedBy(10 ** 18).toNumber(),
         backedValue: new BigNumber(res[0]).dividedBy(10 ** 18).toNumber()
       })
     })
@@ -354,15 +349,15 @@ class Seed extends React.Component<any, Seeds> {
     });
   };
   hideModal = () => {
-    let that=this;
+    let that = this;
     that.setState({
       visibleName: false,
     });
 
     that.loading("loading", true, "", "")
-      setTimeout(function () {
-        that.getdata();
-      }, 1500);
+    setTimeout(function () {
+      that.getdata();
+    }, 1500);
   };
   selectName(e: any) {
     let that = this;
@@ -389,14 +384,14 @@ class Seed extends React.Component<any, Seeds> {
     });
   };
   hidePledgeModal = () => {
-    let that=this;
+    let that = this;
     that.setState({
       visiblePledge: false,
     });
     that.loading("loading", true, "", "")
-      setTimeout(function () {
-        that.getdata();
-      }, 1500);
+    setTimeout(function () {
+      that.getdata();
+    }, 1500);
   };
   sendPledgeModal = () => {
     let that = this;
@@ -431,38 +426,33 @@ class Seed extends React.Component<any, Seeds> {
   };
 
 
-  onChangeRecycleNum(e: any) {
-    let that = this;
-    if (e != null) {
-      var a = Math.floor(e);
-      that.setState({
-        recycleNum: a
-      })
-    } else {
-      that.setState({
-        recycleNum: 0
-      })
-    }
-  }
-  recycle = (e: any) => {
-    let that = this;
-    that.setState({
-      visiblerecycle: true,
-      recycleIndex: e.target.dataset.index,
-      maxrecycleNum: Math.floor(e.target.dataset.maxrecyclenum),
-    });
-  }
 
+  showRecycleModal = () => {
+    this.setState({
+      visibleRecycle: true,
+      RecycleNum: 1
+    });
+  };
+  hideRecycleModal = () => {
+    this.setState({
+      visibleRecycle: false,
+      RecycleNum: 1
+    });
+  };
   sendRecycleModal = () => {
     let that = this;
-    let cy = "SEEDMIX";
     that.setState({
-      visibleDetail: false,
-      visiblerecycle: false,
+      visibleRecycle: false
     });
+    let cy = "SEEDMIX";
 
-    contract.recycle(that.state.account, cy, that.state.recycleIndex, "0x" + new BigNumber(that.state.recycleNum).multipliedBy(10 ** 18).toString(16)).then((res) => {
+    console.log(that.state.RecycleNum)
+    contract.sendCy(that.state.account, cy, "0x" + new BigNumber(that.state.RecycleNum).multipliedBy(10 ** 18).toString(16)).then((res) => {
+      console.log("11")
       if (res != null) {
+        that.setState({
+          visibleDetail: false,
+        });
         that.loading("loading", true, "", "")
       }
       service.getTransactionReceipt(res).then((data) => {
@@ -472,21 +462,17 @@ class Seed extends React.Component<any, Seeds> {
             that.getdata();
           }, 1500);
         }
-
       }).catch(e => {
-        that.loading("loading", false, "error", errIcon)
-      });
-    }).catch(e => {
-      message.error(typeof e == "object" ? e.messge : e)
-      console.log(typeof e == "object" ? e.messge : e)
-    })
-  };
 
-  hideRecycleModal = () => {
-    this.setState({
-      visiblerecycle: false,
+      });
+    }).catch((e) => {
+      this.setState({
+        visibleRecycle: false,
+        RecycleNum: 1
+      });
     });
   };
+
 
   Withdrawal(e: any) {
     let that = this;
@@ -624,6 +610,21 @@ class Seed extends React.Component<any, Seeds> {
       })
     }
   }
+
+
+  onChangeSeroNum(e: any) {
+    let that = this;
+    if (e != null) {
+      let seroinfo = Math.floor(e);
+      that.setState({
+        RecycleNum: seroinfo
+      })
+    } else {
+      that.setState({
+        RecycleNum: 0
+      })
+    }
+  }
   cli() {
     let that = this;
     that.setState({
@@ -682,9 +683,9 @@ class Seed extends React.Component<any, Seeds> {
       visibleDetail: false,
     })
     that.loading("loading", true, "", "")
-      setTimeout(function () {
-        that.getdata();
-      }, 1500);
+    setTimeout(function () {
+      that.getdata();
+    }, 1500);
   }
 
   loading = (loadingbox: string, status: boolean, description: string, message: any) => {
@@ -732,7 +733,7 @@ class Seed extends React.Component<any, Seeds> {
                 <p>
                   ‣
                   {i18n.t("rule5")}
-                   </p>
+                </p>
                 <p>
                   ‣
                   {i18n.t("rule6")}
@@ -813,7 +814,6 @@ class Seed extends React.Component<any, Seeds> {
                 <div>
                   <Card>
                     <Statistic
-
                       title={`${i18n.t("Totalpledge")}SERO`}
                       value={this.state.tokenseronum} />
                   </Card>
@@ -877,6 +877,11 @@ class Seed extends React.Component<any, Seeds> {
                       title={`SEEDMIX${i18n.t("balance")}`}
                       value={`${this.state.seedmixBalance !== "NaN" ? this.state.seedmixBalance : 0} `} valueStyle={{ color: '#FFFFFF' }} />
                   </li>
+                  <li>
+                    <Statistic
+                      title="SEEDMIX回收总数"
+                      value={`${this.state.returnValue}`} valueStyle={{ color: '#FFFFFF' }} />
+                  </li>
                 </ul>
               </div>
             </div>
@@ -885,6 +890,10 @@ class Seed extends React.Component<any, Seeds> {
                 <Statistic
                   title={i18n.t("Totalremainingpledge")}
                   value={`${this.state.backedValue} SERO`} valueStyle={{ color: '#FFFFFF' }} />
+                <button onClick={this.showPledgeModal}>
+                  {i18n.t("culture")}
+                  SEEDMIX
+                </button>
                 <Modal
                   title={i18n.t("Inputthenumberofseedcultured")}
                   visible={this.state.visiblePledge}
@@ -920,11 +929,51 @@ class Seed extends React.Component<any, Seeds> {
                   </ul>
                 </Modal>
               </div>
+
               <div>
-                <button onClick={this.showPledgeModal}>
-                  {i18n.t("culture")}
+                <Statistic
+                  title="可回收总数"
+                  value={`${this.state.canReturnValue} SEEDMIX`} valueStyle={{ color: '#FFFFFF' }} />
+                <button onClick={this.showRecycleModal} className="destruction">
+                  {i18n.t("recovery")}
                   SEEDMIX
                 </button>
+                <Modal
+                  title={i18n.t("Pleaseenterthenumberofseedtorecycle")}
+                  visible={this.state.visibleRecycle}
+                  onOk={this.sendRecycleModal}
+                  onCancel={this.hideRecycleModal}
+                  okText={i18n.t("confirm")}
+                  cancelText={i18n.t("cancel")}
+                  maskClosable={false}
+                >
+                  <ul className="modalbox">
+                    <li>
+                      <div>
+                        <p>
+                          {i18n.t("Numberofseedrecovered")}
+                          :
+                          </p>
+                      </div>
+                      <div>
+                        <Tooltip title={`${i18n.t("Maximuminputvalue")}${Math.floor(this.state.canReturnValue)}`}>
+                          <InputNumber type="number" min={1} max={Math.floor(this.state.canReturnValue)} defaultValue={1} value={this.state.RecycleNum} onChange={(e) => this.onChangeSeroNum(e)} className="inputWidth" ></InputNumber>
+                        </Tooltip>
+                      </div>
+                    </li>
+                    <li>
+                      <div>
+                        <p>
+                          {i18n.t("Redeemable")}
+                          SERO:
+                          </p>
+                      </div>
+                      <div>
+                        <Input value={this.state.RecycleNum * 100} disabled={true} />
+                      </div>
+                    </li>
+                  </ul>
+                </Modal>
               </div>
             </div>
             <div className="content-list">
@@ -1018,30 +1067,20 @@ class Seed extends React.Component<any, Seeds> {
                   title={i18n.t("Harvested")}
                   suffix={"SEEDMIX"} precision={3} />
               </Descriptions.Item>
+              <Descriptions.Item >
+                <Statistic value={detailModal.Unlocked && detailModal.Withdrawn && detailModal.Unlocked.minus(detailModal.Withdrawn).toString(10)}
+                  title={i18n.t("Extractable")}
+                  suffix={"SEEDMIX"} precision={3} />
+              </Descriptions.Item>
               <Descriptions.Item label="">
                 <Statistic value={detailModal.Withdrawn && detailModal.Withdrawn.toString(10)}
                   title={i18n.t("Extracted")}
                   suffix={"SEEDMIX"} precision={3} />
               </Descriptions.Item>
-              <Descriptions.Item label="">
-                <Statistic value={detailModal.seedmixrecyclenum}
-                  title={i18n.t("Reclaimed")}
-                  suffix={"SEEDMIX"} precision={3} />
-              </Descriptions.Item>
+
             </Descriptions>
-            <Descriptions column={2}>
-              <Descriptions.Item span={1}>
-                <Statistic value={detailModal.Unlocked && detailModal.Withdrawn && detailModal.Unlocked.minus(detailModal.Withdrawn).toString(10)}
-                  title={i18n.t("Extractable")}
-                  suffix={"SEEDMIX"} precision={3} />
-              </Descriptions.Item>
-              <Descriptions.Item span={1}>
-                <Statistic value={`${new BigNumber((detailModal.Withdrawn && detailModal.Withdrawn.toString(10))).minus(detailModal.seedmixrecyclenum)}`}
-                  title={i18n.t("Recyclable")}
-                  suffix={"SEEDMIX"} precision={3} />
-              </Descriptions.Item>
-            </Descriptions>
-            <Descriptions column={2}>
+
+            <Descriptions column={3}>
               <Descriptions.Item span={1}> {detailModal.showDetail ? <ul>
                 {detailModal.lookDetail ? <li className="detailbtn" data-index={detailModal.index} onClick={(e) => this.WithdrawalDetail(e)}>
                   {i18n.t("withdrawal")}
@@ -1049,29 +1088,6 @@ class Seed extends React.Component<any, Seeds> {
               </ul> : <ul> <li className="message-success">
                 {i18n.t("Completed")}
               </li></ul>}
-              </Descriptions.Item>
-              <Descriptions.Item span={1}>
-                <ul>
-                  {new BigNumber(detailModal.Withdrawn && detailModal.Withdrawn.toString(10)).minus(detailModal.seedmixrecyclenum).toNumber() === 0 ? <li className="message-success">
-                    {i18n.t("NoSEEDMIX")}
-                    </li> : <li>{new BigNumber(detailModal.Withdrawn && detailModal.Withdrawn.toString(10)).minus(detailModal.seedmixrecyclenum).toNumber() >= 1 ? <div className="detailbtn" data-maxrecyclenum={`${new BigNumber((detailModal.Withdrawn && detailModal.Withdrawn.toString(10))).minus(detailModal.seedmixrecyclenum)}`} data-index={detailModal.index} onClick={(e) => this.recycle(e)}>
-                      {i18n.t("recovery")}
-                      </div> : <div className="message-success">
-                      {i18n.t("Integerrequiredforrecycling")}
-                        </div>}</li>}
-                </ul>
-                <Modal
-                  title={i18n.t("EnterrecyclingSEEDMIX")}
-                  visible={this.state.visiblerecycle}
-                  onOk={this.sendRecycleModal}
-                  onCancel={this.hideRecycleModal}
-                  okText={i18n.t("confirm")}
-                  cancelText={i18n.t("cancel")}
-                >
-                  <Tooltip title={`${i18n.t("Maximuminputvalue")}${this.state.maxrecycleNum}`}>
-                    <InputNumber type="number" min={1} max={this.state.maxrecycleNum} defaultValue={1} value={new BigNumber(this.state.recycleNum).toNumber()} onChange={(e) => this.onChangeRecycleNum(e)} className="inputWidth" ></InputNumber>
-                  </Tooltip>
-                </Modal>
               </Descriptions.Item>
             </Descriptions>
           </div>
