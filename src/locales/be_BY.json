@@ -54,5 +54,7 @@
     "Integerrequiredforrecycling": "Цэлае цэлае, неабходнае для перапрацоўкі",
     "EnterrecyclingSEEDMIX": "Увядзіце перапрацоўку SEEDMIX",
     "Maximuminputvalue": "Максімальнае значэнне ўводу",
-    "Totalrecoverable":"Усяго можна аднавіць"
+    "Totalrecoverable":"Усяго можна аднавіць",
+    "seedetails":"глядзіце падрабязнасці",
+    "message":"Калі ласка, увядзіце цэлы лік"
 }

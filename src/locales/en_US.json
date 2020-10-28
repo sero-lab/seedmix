@@ -54,5 +54,7 @@
   "Integerrequiredforrecycling":"Integer required for recycling",
   "EnterrecyclingSEEDMIX":"Enter recycling SEEDMIX",
   "Maximuminputvalue":"Maximum input value",
-  "Totalrecoverable":"Total recoverable"
+  "Totalrecoverable":"Total recoverable",
+  "seedetails":"see details",
+  "message":"Please enter an integers"
 }
